@@ -1,19 +1,30 @@
-<% if (number = review.get_likes.size) == 0 %>
-    0<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+<% if current_user.liked? review %>
+<% like = Vote.find_by votable_type: "Review", votable_id: review.id, voter_id: current_user.id %>
+<i class="fa fa-thumbs-up bt-like bt-unlike-<%= like.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px; width: 80px;">
+  <span><%= review.get_likes.size %> Like</span>
+</i>
+<i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"> Comment</i>
 <% else %>
-	<span class="dropdown">
-	  <a href="#" class="dropdown-toggle link" data-toggle="dropdown" role="button" aria-expanded="false">
-				<%= number %>
-				<% if number == 1 %>
-          <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-				<% else %>
-          <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-				<% end %>	
-    </a>
-	  <ul class="dropdown-menu" role="menu">
-	    <% Vote.where("votable_id=?", review.id).each do |like| %>
-	    	<li><%= User.find_by(id: like.voter_id).email %></li>
-	   	<% end %>
-	  </ul>
-	</span>
- <% end %>
+<i class="fa fa-thumbs-o-up bt-like bt-like-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px; width: 80px;">
+  <span><%= review.get_likes.size %> Like</span>
+</i>
+<i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"> Comment</i>
+<% end %>
+
+<script>
+<% if current_user.liked? review %>
+  <% like = Vote.find_by votable_type: "Review", votable_id: review.id, voter_id: current_user.id %>
+  $('.bt-unlike-<%= like.id %>').click(function(){
+    $('.btn-submit-unlike-<%= like.id %>').click();
+  });
+<% end %>
+  $('.bt-like-<%= review.id %>').click(function(){
+    $('.btn-submit-like-<%= review.id %>').click();
+  });
+</script>
+
+<script>
+  $('.bt-comment-<%= review.id %>').click(function(){
+    $('.show-new-comment-<%= review.id %>').toggle();
+  });
+</script>

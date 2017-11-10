@@ -1,5 +1,6 @@
 <%= form_for Vote.new, remote: true do |f| %>
 	<div><%= hidden_field_tag :votable_id, review.id %></div>
 	<div><%= hidden_field_tag :votable_type, "Review" %></div>
-	<%= f.submit "Like", class: "btn btn-primary" %>
+  <input class="btn btn-primary btn-submit-like-<%= review.id%>" type="submit" value="Like" style="display: none" />
 <% end %>
+

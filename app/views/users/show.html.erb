@@ -1,109 +1,138 @@
-<div class="row centered">
+<% content_for :header do %>
+<%= render 'shared/header' %>
+<% end %>
+
+<div class="row" style="margin-top: 150px; height: 300px">
+  <div class="col-md-1"></div>
   <div class="col-md-2">
-    <%= image_tag @user.avatar.url(:medium), class: "round-image-150" %>
+    <%= image_tag @user.avatar.url(:medium), class: "round-image-200" %>
   </div>
-  <div class="col-md-7">
-    <h1><%= @user.name %></h1>
-    <h3>
-      <span class="glyphicon glyphicon-envelope"> <%= @user.email %></span>
-    </h3>
-    <h3>
-      <% if @user.date_of_birth.present? %>
-        <i class="fa fa-birthday-cake"><%= @user.date_of_birth.day %>/<%= @user.date_of_birth.month %>/<%=@user.date_of_birth.year %></i>
-      <% else %>
-        <i class="fa fa-birthday-cake"> No Infomation </i>
-      <% end %>
-    </h3>
-      <% if user_signed_in? && current_user == @user %>
-       <button class="btn btn-default btn btn-info"><%= link_to 'Edit Profile', edit_user_registration_path %></button>
-       <% end %>
-    </h3>
-  </div>
-  <div class="col-md-3">
-    <% if user_signed_in? && current_user != @user %>
-    <section id="follow" style="height: 150px"  align="right">
-      <% if current_user.liked? @user  %>
+  <div class="col-md-4">
+    <h1 style="font-size: 35px;"><%= get_user_name(@user.id).titleize %></h1>
+    <span class="glyphicon glyphicon-envelope" style="font-size: 20px"> <%= @user.email %></span>
+    <br>
+    <% if @user.date_of_birth.present? %>
+    <i class="fa fa-birthday-cake" style="font-size: 20px"> <%= @user.date_of_birth.day %>/<%= @user.date_of_birth.month %>/<%=@user.date_of_birth.year %></i>
+    <% else %>
+    <i class="fa fa-birthday-cake" style="font-size: 20px"> No Infomation </i>
+    <% end %>
+    <br>
+
+    <% if user_signed_in? && current_user == @user %>
+    <button class="btn btn-default btn btn-info" style="margin-top: 10px;"><%= link_to 'Edit Profile', edit_user_registration_path, style: "color: black" %></button>
+    <% end %>
+    <div style="margin-top: 10px">
+      <% if user_signed_in? && current_user != @user %>
+      <section id="follow" style="height: 150px">
+        <% if current_user.liked? @user  %>
         <% follow = Vote.find_by votable_type: "User", votable_id: @user.id, voter_id: current_user.id %>
         <%= render "users/unfollow", follow: follow %>
-      <% else %>
+        <% else %>
         <%= render "users/follow", user_id: @user.id %>
+        <% end %>
+      </section>
       <% end %>
-    </section>
-    <% end %>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-md-2">
-  </div>
-  <div class="col-md-7">
-  </div>
-  <div class="col-md-3">
-    <div style="margin-top: -195px;">
-    <button class="btn btn-default btn btn-success" onclick="openCity(event, 'Following')" id="defaultOpen">Following</button>
-    <button class="btn btn-default btn btn-warning" onclick="openCity(event, 'Followers')">Followers</button>
+
+  <div class="col-md-4">
+    <div style="margin-top: 10px;">
+      <button class="btn btn-default btn btn-success" style="" onclick="openCity(event, 'Following')" id="defaultOpen">Following</button>
+      <button class="btn btn-default btn btn-warning" style="margin-left: 0px" onclick="openCity(event, 'Followers')">Followers</button>
     </div>
 
-    <div id="Following" class="tabcontent">
+    <div id="Following" class="tabcontent"">
       <% if @following.any? %>
-          <%= render @following %>
-        <%= will_paginate @following %>
+      <%= render @following %>
+      <%= will_paginate @following %>
       <% else %>
-        No following to show.
+      <div style="margin-top: 5px; background-color: #f7f7fa"><span style="font-size: 18px; ">No following to show</span></div>
       <% end %>
     </div>
 
     <div id="Followers" class="tabcontent">
       <% if @followers.any? %>
-          <%= render @followers %>
-        <%= will_paginate @followers %>
+      <%= render @followers %>
+      <%= will_paginate @followers %>
       <% else %>
-        No followers to show.
+      <div style="margin-top: 5px; background-color: #f7f7fa"><span style="font-size: 18px; ">No followers to show</span></div>
       <% end %>
     </div>
   </div>
 </div>
-  <p style="font-size: 33px; padding-left: 23px; color: #a0918f;margin-top: 20px"> List Review</p>
-  <table style="margin-top: 20px;">
-    <tbody class="userlist">
-    <% @user.reviews.each do |review| %>
-      <tr style="border: 2px solid #a6a0a0">
-        <td style="width: 1px; border: 2px solid #a6a0a0;"><%= link_to image_tag(review.book.book_img.url(:book_show), height: '300',width: '400',:class => "style_image"), book_path(review.book.id) %></td>
-        <td style="border: 2px solid #a6a0a0">
-          <span class="tip-left" style="padding-left: 20px;"><span style="font-weight: 800;
-    font-size: 16px;">Title :</span><span style="font-weight: 500; font-size: 16px; color: #db5b09; padding-left: 50px;"><%= review.book.title.truncate_words(10) %></span></span><br>
-          <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800;
-    font-size: 16px;">Description :</span><%= review.book.description.truncate_words(60) %></span>
-          <br><br>
-          <% reviewer = review.user %>
-          <% name = reviewer.name ? reviewer.name : reviewer.email %>
-          <% from_time = review.created_at %>
-          <blockquote class="remove">
-          <cite style="margin-top: -20px;">
-            <%= link_to image_tag(review.user.avatar.url(:medium), class: "round-image-50"), reviewer %>
-            <%= link_to name, reviewer %><span style="padding-left: 400px;" class="review-rating" data-score="<%= review.rating  %>" ></span><br>
-            <span style="padding-left: 20px;"><%= time_ago_in_words from_time %> ago.</span></cite>
-            <span><%= review.comment %></span>
-          </blockquote>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-  </table>
+
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-5"><p style="font-size: 33px; color: #a0918f;margin-top: 20px"> List Review</p></div>
+</div>
+<% @user.reviews.each do |review| %>
+<% unless review.book.blank? %>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10 profile-show-review">
+    <div class="book-image">
+      <%= link_to image_tag(review.book.book_img.url(:book_show), class: "image"), book_path(review.book.id) %>
+    </div>
+    <div class="book-review-content">
+      <div>
+        <span class="tip-left" style="padding-left: 20px; margin-top: -10px;"></span>
+        <span style="font-weight: 800; font-size: 20px;">Title :</span>
+        <span style="font-weight: 500; font-size: 20px; color: #db5b09; "><%= review.book.title.truncate_words(10) %></span>
+      </div>
+      <div class='book-description'>
+        <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Description :</span><%= review.book.description.truncate_words(60) %></span>
+      </div>
+
+      <div class="review-info">
+        <% reviewer = review.user %>
+        <% name = reviewer.name ? reviewer.name : reviewer.email %>
+        <% from_time = review.created_at %>
+
+        <div class="avatar-user">
+          <%= link_to image_tag(review.user.avatar.url(:medium), class: "round-image-50"), reviewer %>
+        </div>
+        <div class="name-time">
+          <%= link_to name.titleize, reviewer, style: "color: red; margin-right: 5px; margin-left: 10px" %>
+          <% for i in (1..5) do %>
+          <% if i<=review.rating %>
+          <i class="fa fa-star" style="color: #faca51"></i>
+          <% else %>
+          <i class="fa fa-star"></i>
+          <% end %>
+          <% end %>
+          <br>
+          <div style="margin-top: -5px"><span style="margin-left: 10px; color: #999999;"><%= time_ago_in_words from_time %> ago.</span></div>
+
+        </div>
+
+
+      </div>
+      <div>
+        <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Review: </span><%= review.comment %></span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+<% end %>
+<% end %>
+
 
 <script>
-function openCity(evt, cityName) {
+  function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+      tabcontent[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
-}
+  }
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
