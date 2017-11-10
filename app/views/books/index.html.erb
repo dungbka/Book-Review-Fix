@@ -1,3 +1,7 @@
+<% content_for :header do %>
+    <%= render 'shared/header' %>
+<% end %>
+
 <p id="alert", style="color:red;font-size:36px"><%= alert %></p>
 
 <%if params[:search] %>

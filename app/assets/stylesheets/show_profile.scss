@@ -1,0 +1,38 @@
+.profile-show-review {
+  margin-top: 10px;
+  border: 2px solid #a6a0a0;
+  height: 350px;
+  margin-left: 28px;
+  overflow: hidden;
+  .book-image {
+    width: 300px;
+    margin-left: -26px;
+    float: left;
+    .image {
+        height: 346px;
+        width: 280px;
+        margin: 0 auto;
+        background-size: cover;
+    }
+  }
+
+  .book-review-content {
+    margin-top: 5px;
+    float: left;
+    .book-description {
+      display: block;
+      width: 800px;
+    }
+
+    .review-info {
+      margin-top: 25px;
+      overflow: hidden;
+      .avatar-user {
+        float: left;
+      }
+      .name-time {
+        float: left;
+      }
+    }
+  }
+}

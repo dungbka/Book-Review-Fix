@@ -1,12 +1,119 @@
-<header class="navbar navbar-fixed-top navbar-inverse bg-info">
-  <div class="container">
-    <%= link_to "sample app", '#', id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home",   '#' %></li>
-        <li><%= link_to "Help",   '#' %></li>
-        <li><%= link_to "Log in", '#' %></li>
-      </ul>
-    </nav>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Book Reviews</title>
+
+
+  <link rel='stylesheet' id='odrin_master-css-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/master.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='odrin_custom-css-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/custom.css?ver=1.0' type='text/css' media='all' />
+  <style id='odrin_custom-css-inline-css' type='text/css'>
+
+
+    /* Typography */
+    body {
+      font-family: Muli;
+      font-style: normal;
+    }
+
+    .fw-table .heading-row,
+    .fw-package .fw-heading-row,
+    .special-first-letter > p:first-of-type:first-letter,
+    .woocommerce .SingleProductInfoBox .info-box-panel-description > p:first-of-type:first-letter,
+    .bb-bookblock .book-content-inner > p:first-of-type:first-letter,
+    .woocommerce .price del, .woocommerce .price > span,
+    .font-heading {
+      /*font style*/
+      font-family: Cinzel Decorative;
+      font-style: normal;
+    }
+
+    /* Footer */
+    .footer .overlay-color {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body class="product-template-default single single-product postid-145 woocommerce woocommerce-page">
+  <div class="main-navigation-container is-nav-sticky is-slicknav double-navigation">
+    <!-- nav bar -->
+    <nav id="main-navigation-menu-left" class="main-navigation-menu navigation-left">
+      <ul id="menu-main-menu-left" class="is-slicknav-navigation-left"><li id="menu-item-683" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-683"><%= link_to "Home", root_path %>
+
+      </li>
+      <li id="menu-item-689" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-689">
+        <%= link_to "Lastest Reviews", reviews_path %>
+      </li>
+    </ul>   </nav>
+    <div class="navigation-logo is-slicknav-logo">
+<!--       <a href="http://subsolardesigns.com/odrin/demo1/">
+        <h1>Bo</h1><h1>ok Reviews</h1>
+      </a> -->
+      <li>
+        <form class="navbar-form" role="search">
+            <input style="margin-top: -40px; width: 419px; border: 1px solid #ccc" type="text" class="form-control form-search" placeholder="Search" name="search" id="search-form">
+            <button style="display: none" id="button-search" type="submit"></button>
+        </form>
+        </li>
+    </div>
+    <nav id="main-navigation-menu-right" class="main-navigation-menu navigation-right">
+      <ul id="menu-main-menu-right" class="is-slicknav-navigation-right">
+      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32"><a href="#">Categorys</a>
+        <ul  class="sub-menu">
+          <% Category.all.each do |category| %>
+              <li class = "<%= 'active' if params[:category] == category.name %>" id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
+                <%= link_to category.name, books_path(category: category.name), class: "link" %>
+              </li>
+          <% end %>
+        </ul>
+      </li>
+      <% if user_signed_in? %>
+      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32"><a href="#"><%= get_user_name(current_user.id).truncate(10) %></a>
+        <ul  class="sub-menu">
+        <% if current_user.admin? %>
+            <% if can? :manage, User %>
+              <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706"><%= link_to "Manage user", users_path, class: "red-text" %></li>
+            <% end %>
+            <% if can? :create, Book %>
+              <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706"><%= link_to "Add Book", new_book_path, class: "red-text" %></li>
+            <% end %>
+            <% if can? :create, Category %>
+              <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706"><%= link_to "Add Category", new_category_path, class: "red-text" %></li>
+            <% end %>
+        <% end %>
+          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
+            <%= link_to "Profile", current_user %></li>
+          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
+            <%= link_to 'Edit Profile', edit_user_registration_path %></li>
+          <li id="menu-item-762" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-762">
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+          </li>
+        </ul>
+      </li>
+      <% else %>
+      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32">
+        <%= link_to "Sign In", new_user_session_path %>
+        <ul class="sub-menu">
+          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
+            <%= link_to "Sign Up", new_user_registration_path %>
+          </li>
+        </ul>
+      </li>
+
+      <% end %>
+
+
+
+    </ul>   </nav>
   </div>
-</header>
+</body>
+</html>
+
+<script>
+  $('#search-form').keypress(function(e){
+    if(e.which == 13){
+      $('#button-search').click();
+    }
+  })
+</script>
+
