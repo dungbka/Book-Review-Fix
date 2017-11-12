@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit]
   before_action :get_categories, only: [:new, :edit, :create, :update]
   skip_before_action :check_params_search, only: :index
-  
+
   def index
     if params[:search]
       @books=Book.search(params[:search]).order("created_at DESC")
@@ -23,14 +23,14 @@ class BooksController < ApplicationController
   end
 
   def show
-    @review = @book.reviews.paginate(page: params[:page], per_page: 3)
+    @reviews = @book.reviews.paginate(page: params[:page], per_page: 3)
     if user_signed_in?
       @flag = Review.where(:book_id => @book, :user_id => current_user.id)
     end
     if @book.reviews.blank?
       @average_review = 0
     else
-      @review = @book.reviews.paginate(page: params[:page], per_page: 3)
+      @reviews = @book.reviews.paginate(page: params[:page], per_page: 3)
       @average_review = @book.reviews.average(:rating)
     end
   end

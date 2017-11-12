@@ -1,68 +1,224 @@
-<div class="row">
-  <div class="col-md-4">
-    <%= image_tag @book.book_img.url(:book_show), class: "book-show" %>
-  </div>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Show Book</title>
 
-  <div class="col-md-8">
-    <h2><%= @book.title %></h2>
-    <h3><%= @book.author %></h3>
-    <h2>Average Rating</h2>
-    <div class="average-review-rating" data-score=<%= @average_review %>></div>
-    <span>Based on <%= @book.reviews.count %> reviews</span>
-    <p><%= @book.description %></p>
-    <table class="bg-info">
-      <tr>
-        <h4><td>Category:
-          <% @book.categories.all.each do |category| %>
+  <link rel='stylesheet' id='woocommerce-general-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=3.2.3' type='text/css' media='all' />
+  <link rel='stylesheet' id='odrin_fonts-css'  href='https://fonts.googleapis.com/css?family=Muli:200,200italic,300,300italic,regular,italic,600,600italic,700,700italic,800,800italic,900,900italic%7CCinzel+Decorative:regular,700,900%7CGentium+Basic:regular,italic,700,700italic' type='text/css' media='all' />
+  <link rel='stylesheet' id='acf-fonticonpicker-icons-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/inc/includes/acf-fonticonpicker/icons/acf-fonticonpicker-icons.css?ver=4.8.3' type='text/css' media='all' />
+  <link rel='stylesheet' id='fw-ext-builder-frontend-grid-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/unyson/framework/extensions/builder/static/css/frontend-grid.css?ver=1.2.10' type='text/css' media='all' />
+  <link rel='stylesheet' id='fw-ext-forms-default-styles-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/unyson/framework/extensions/forms/static/css/frontend.css?ver=2.7.9' type='text/css' media='all' />
+  <link rel='stylesheet' id='font-awesome-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/unyson/framework/static/libs/font-awesome/css/font-awesome.min.css?ver=2.7.9' type='text/css' media='all' />
+  <link rel='stylesheet' id='owl-carousel-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/owl.carousel.min.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='et-line-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/et-line.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='simplelightbox-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/simpleLightbox.min.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='perfect-scrollbar-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/perfect-scrollbar.custom.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='bookblock-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/bookblock.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='odrin_master-css-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/master.css?ver=1.0' type='text/css' media='all' />
+  <link rel='stylesheet' id='odrin_custom-css-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/themes/odrin/assets/css/custom.css?ver=1.0' type='text/css' media='all' />
+  <style id='odrin_custom-css-inline-css' type='text/css'>
 
-          <%= link_to category.name, books_path(category: category.name) %>
-        <% end %>
-        </td></h4>
-      </tr>
-    </table>
-  </div>
-</div>
 
-<div class="row">
-  <% if user_signed_in? %>
-    <% if @flag.empty? %>
-      <div class="col-md-4" style="word-wrap: break-word;">
-      <br>
-      <div class="margin-right">
-        <%= link_to raw("<i class=\"glyphicon glyphicon-pencil\"> Add review</i>"), new_book_review_path(@book), :id => "button-edit", :class => "btn btn-primary button-edit" %>
+    /* Typography */
+    body {
+      font-family: Muli;
+      font-style: normal;
+    }
+
+    h1,
+    .fw-table .heading-row,
+    .fw-package .fw-heading-row,
+    .special-first-letter > p:first-of-type:first-letter,
+    .woocommerce .SingleProductInfoBox .info-box-panel-description > p:first-of-type:first-letter,
+    .bb-bookblock .book-content-inner > p:first-of-type:first-letter,
+    .woocommerce .price del, .woocommerce .price > span,
+    .font-heading {
+      font-family: Cinzel Decorative;
+      font-style: normal;
+      ;
+    }
+
+    /* Custom CSS */
+
+  </style>
+
+</head>
+<% content_for :header do %>
+    <%= render 'shared/header' %>
+<% end %>
+
+<body class="product-template-default single single-product postid-145 woocommerce woocommerce-page">
+  <div class="is-nav-offset"></div>
+  <div class="MAIN-CONTENT">
+    <div class="container mt-100">
+      <div class="row">
+        <div class="col-sm-12">
+          <nav class="woocommerce-breadcrumb"><a href="http://subsolardesigns.com/odrin/demo1">Home</a>&nbsp;&#47;&nbsp;<a href="http://subsolardesigns.com/odrin/demo1/product-category/adventure/">Adventure</a>&nbsp;&#47;&nbsp;<%= @book.title %></nav>
+          <div id="product-145" class="post-145 product type-product status-publish has-post-thumbnail product_cat-adventure first instock taxable shipping-taxable purchasable product-type-simple">
+            <!-- importtiam -->
+            <div class="SingleProductHeader mb-100">
+              <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 0; transition: opacity .25s ease-in-out;">
+                <div class="woocommerce-product-gallery__image-wrapper SingleProductImage">
+                  <div data-thumb="http://subsolardesigns.com/odrin/demo1/wp-content/uploads/sites/8/2017/08/cover_pisces-80x120.png" class="woocommerce-product-gallery__image PageFlipBook">
+                    <a href="#" class="is-page-flip single-has-edge has-edge has-edge-thick" data-post-id="145">
+                      <img width="468" height="700" src="<%= @book.book_img.url %>" class="attachment-shop_single size-shop_single wp-post-image" alt=""/>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="single-product-summary">
+                <div class="SpecialHeading mb-60"><h1 class="product_title special-title entry-title"><%= @book.title.truncate(20) %></h1></div>
+                <div class="woocommerce-product-details__short-description mb-60">
+                  <p style="font-size: 15px; font-family: Muli; display: block; line-height: 1.82em"><%= @book.description.truncate(800) %></p>
+                </div>
+              </div><!-- .summary -->
+            </div>
+          </div><!-- #product-145 -->
+        </div><!-- end col-sm-12 -->
+      </div><!-- end row -->
+    </div><!-- end container -->
+  </div><!-- end MAIN-CONTENT -->
+
+  <div class="rate-container">
+    <div id="rate-show-hotel">
+      <div id="rate-avg-hotel">
+        <p style="text-align: center; font-size: 15pt;">Rate Average:</p>
+        <p id="rate-sum"><%= @average_review.round(1) %>/5 </p>
+        <p id="rate-count"><i class="fa fa-user"></i> Total Rate: <%= @book.total_rate %></p>
       </div>
-      <br><br>
-    <% else %>
-        <h4><%= "You have reviewed this book" %></h4>
-    <% end %>
-  <% else %>
-    <h4><%= "You have to login to review" %></h4>
-  <% end %>
-    <br>
-      <%= render @review %>
-      <%= will_paginate @review%>
+      <div id="rate-detail-hotel">
+        <span> 5 </span>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <% if (@book.rate_five_per).to_i==0 %>
+        <div class="bar bar-5">
+          <p>0%</p>
+        </div>
+        <% else %>
+        <div class="bar bar-5" style="width: <%= @book.rate_five_per %>%;">
+          <p><%= (@book.rate_five_per*1.25).to_i %>%</p>
+        </div>
+        <% end %>
+        <div class="clearfix"></div>
+
+        <span> 4 </span>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <% if @book.rate_four_per.to_i==0 %>
+        <div class="bar bar-4">
+          <p>0%</p>
+        </div>
+        <% else %>
+        <div class="bar bar-4" style="width: <%= @book.rate_four_per %>%;">
+          <p><%= (@book.rate_four_per*1.25).to_i %>%</p>
+        </div>
+        <% end %>
+        <div class="clearfix"></div>
+
+        <span> 3 </span>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <% if @book.rate_three_per.to_i==0 %>
+        <div class="bar bar-3">
+          <p>0%</p>
+        </div>
+        <% else %>
+        <div class="bar bar-3" style="width: <%= @book.rate_three_per %>%;">
+          <p><%= (@book.rate_three_per*1.25).to_i %>%</p>
+        </div>
+        <% end %>
+        <div class="clearfix"></div>
+
+        <span> 2 </span>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <% if @book.rate_two_per.to_i==0 %>
+        <div class="bar bar-2">
+          <p>0%</p>
+        </div>
+        <% else %>
+        <div class="bar bar-2" style="width: <%= @book.rate_two_per %>%;">
+          <p><%= (@book.rate_two_per*1.25).to_i %>%</p>
+        </div>
+        <% end %>
+        <div class="clearfix"></div>
+
+        <span> 1 </span>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <% if @book.rate_one_per.to_i==0 %>
+        <div class="bar bar-1">
+          <p>0%</p>
+        </div>
+        <% else %>
+        <div class="bar bar-1" style="width: <%= @book.rate_one_per %>%;">
+          <p><%= (@book.rate_one_per*1.25).to_i %>%</p>
+        </div>
+        <% end %>
+        <div class="clearfix"></div>
+      </div>
+    </div>
   </div>
-  <br>
-  <% if user_signed_in? %>
-    <% if can? :update, @book %>
-      <%= link_to 'Edit', edit_book_path(@book), class: "btn btn-primary" %>
+
+  <div class="review-comment">
+    <% if user_signed_in? %>
+      <% if @flag.empty? %>
+        <div class="add-review">
+          <div id="bt-add-review">
+            <button class="button-review">Add Your Review</button>
+          </div>
+          <div class="content-add-review", style="display: none">
+            <%= simple_form_for([@book, @book.reviews.build]) do |f| %>
+            <div id="rating-form">
+              <label>Rating</label>
+            </div>
+            <%= f.text_area :comment, class: 'form-control' ,:required => true %>
+            <%= f.button :submit, class: "button-review" %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div>
+          <% @my_review = Review.find_by(user_id: current_user.id, book_id: @book.id) %>
+          <p style="font-size: 20px; color: red">You are reviewed</p>
+          <button class="button-review bt-update-review"><span class="glyphicon glyphicon-pencil"></span> Edit Review</button>
+          <%= link_to '<span class="glyphicon glyphicon-trash"></span> Delete Review'.html_safe, book_review_path(@my_review.book, @my_review), method: :delete, data: {confirm: "Are you sure?"},class: 'button-review', :id => "button-edit"%>
+        </div>
+         <div class="update-review" style="display: none">
+            <%= simple_form_for([@book, @my_review]) do |f| %>
+              <div id="rating-form">
+                <label>Rating</label>
+              </div>
+              <%= f.input :comment %>
+              <%= f.button :submit, :class => "btn-custom2" %>
+            <% end %>
+          </div>
+      <% end %>
+    <% else %>
+    <p style="font-size: 20px; color: red">You must login to review</p>
     <% end %>
-    <% if can? :destroy, @book %>
-      <%= link_to 'Delete', book_path(@book), method: :delete, data: {confirm: "Are you sure?" }, class: "btn btn-danger" %>
-    <% end %>
-  <% end %>
-</div>
 
+    <div class="show-review">
+      <p style="font-size: 20px; margin-top: 30px;">Reviews</p>
+      <%= render @reviews %>
+      <%= will_paginate @reviews %>
+    </div>
 
+  </div>
 
-<script type='text/javascript'>
+  <script>
+    $(document).ready(function(){
+      $("#bt-add-review").click(function(){
+        $(".content-add-review").toggle();
+      });
+    });
+  </script>
 
-    (function()
-    {
-        if( window.localStorage )
-        {
-            if( !localStorage.getItem('firstLoad') )
-            {
+  <script>
+    $('.bt-update-review').click(function(){
+      $('.update-review').toggle();
+    })
+  </script>
+
+  <script type='text/javascript'>
+    (function(){
+        if( window.localStorage ){
+            if( !localStorage.getItem('firstLoad') ){
                 localStorage['firstLoad'] = true;
                 window.location.reload();
             }
@@ -71,26 +227,26 @@
         }
     })();
 
-</script>
+  </script>
 
-<script>
-    $('.review-rating').raty({
-        readOnly: true,
-        score: function() {
-            return $(this).attr('data-score');
-        },
-        path: '/assets/'
-    });
-</script>
+  <script>
+      $('#rating-form').raty({
+          path: '/assets/',
+          scoreName: 'review[rating]',
+          score: 5
+      });
 
+  </script>
 
-<script>
-    $('.average-review-rating').raty({
-        readOnly: true,
-        path: '/assets/',
-        score: function() {
-            return $(this).attr('data-score')
-        }
-    });
-</script>
+  <!-- show anh -->
+  <script type='text/javascript'>
+    /* <![CDATA[ */
+    var wc_single_product_params = {"i18n_required_rating_text":"Please select a rating","review_rating_required":"yes","flexslider":{"rtl":false,"animation":"slide","smoothHeight":true,"directionNav":false,"controlNav":"thumbnails","slideshow":false,"animationSpeed":500,"animationLoop":false,"allowOneSlide":false},"zoom_enabled":"","photoswipe_enabled":"","photoswipe_options":{"shareEl":false,"closeOnScroll":false,"history":false,"hideAnimationDuration":0,"showAnimationDuration":0},"flexslider_enabled":""};
+    /* ]]> */
+  </script>
+  <script type='text/javascript' src='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/woocommerce/assets/js/frontend/single-product.min.js?ver=3.2.3'></script>
+  <script type='text/javascript' src='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
+  <script type='text/javascript' src='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
+</body>
+
 

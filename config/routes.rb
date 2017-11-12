@@ -7,8 +7,11 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
+
+  post 'create_comment', to: 'comments#create_comment', as: 'create_comment'
+
   resources :reviews
   resources :votes, only: [:create, :destroy]
-  
+
   root 'books#index'
 end
