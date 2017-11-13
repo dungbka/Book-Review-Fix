@@ -23,7 +23,8 @@
           <span style="font-weight: 500; font-size: 20px; color: #db5b09; "><%= review.book.title.truncate_words(10) %></span>
         </div>
         <div class='book-description'>
-          <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Description :</span><%= review.book.description.truncate_words(60) %></span>
+
+          <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Description :</span><%= review.book.description.truncate(200) %></span>
         </div>
 
         <div class="review-info">
@@ -51,7 +52,7 @@
 
         </div>
         <div class="review-comment-content">
-          <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Review: </span><%= review.comment.truncate(170) %></span>
+          <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Review: </span><%= review.comment.truncate(420) %></span>
         </div>
       </div>
     </div>

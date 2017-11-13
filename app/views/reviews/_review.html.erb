@@ -1,56 +1,3 @@
-<!-- <div class="review-rating" data-score="<%= review.rating  %>"></div>
-  <%= review.comment %> - <%= link_to review.user.name, review.user %>
-<% if can? :update, review %>
-    <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_book_review_path(review.book, review),class: 'button-review',:id => "button-edit"  %>
-<% end %>
-<% if can? :destroy, review %>
-    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, book_review_path(review.book, review), method: :delete, data: {confirm: "Are you sure?"},class: 'button-review', :id => "button-edit"%>
-<% end %>
-
-<br>
-
-<span id="show-comment-<%=review.id%>" onclick="show_comment(this.id)">
-  <%= review.root_comments.count %><i class="fa fa-comments-o" aria-hidden="true"></i>
-</span>
-<% if user_signed_in? %>
-  <div>
-    <section id="like<%= review.id %>">
-      <% if current_user.liked? review  %>
-        <% like = Vote.find_by votable_type: "Review", votable_id: review.id, voter_id: current_user.id %>
-        <%= render "reviews/unlike", like: like %>
-      <% else %>
-        <%= render "reviews/like", review: review %>
-      <% end %>
-    </section>
-  </div>
-    <div id="display-comment-<%=review.id%>" class="display-comment">
-    <% review.root_comments.each do |comment| %>
-        <% if User.find_by(id: comment.user_id).name == nil %>
-            <p><%= comment.body%> -  <%= link_to User.find_by(id: comment.user_id).email, user_path(User.find_by(id: comment.user_id).id) %><br></p>
-        <% else %>
-            <p><%= comment.body%> -  <%= link_to User.find_by(id: comment.user_id).name, user_path(User.find_by(id: comment.user_id).id) %><br></p>
-        <% end %>
-    <% end %>
-      <%= link_to "Comment", book_review_path(@book, review), :class => "btn btn-primary button-edit btn-sm", :id => "button-edit" %>
-    </div>
-
-<%end %>
-<br><br>
-
-<script>
-    var show_comment = function()
-    {
-        if (document.getElementById('display-comment-<%=review.id%>').style.display !== 'none') {
-            (document.getElementById('display-comment-<%=review.id%>')).style.display = 'none';
-        }
-        else {
-            (document.getElementById('display-comment-<%=review.id%>')).style.display = 'block';
-        }
-
-    }
-    document.getElementById('show-comment-<%=review.id%>').onclick = show_comment;
-</script> -->
-
 <!-- name co the bi nil khi do dung get_user_name de tra ve email neu nil -->
 <div class="border-review"></div>
 <div class="review-container">
@@ -120,7 +67,7 @@
             <%= f.hidden_field :user_id, value: current_user.id %>
             <%= f.hidden_field :commentable_type, value: "Review" %>
             <%= f.text_area :body, class: 'form-control' %>
-            <%= f.submit "send" %>
+            <%= f.submit "send", class: 'button-send-comment', style: "margin-top: 10px;"%>
           <% end %>
         </div>
       <% end %>
