@@ -80,15 +80,14 @@
               <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706"><%= link_to "Add Category", new_category_path, class: "red-text" %></li>
             <% end %>
         <% end %>
-          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
+          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706  profile-path">
             <%= link_to "Profile", current_user %></li>
-          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
-            <%= link_to 'Edit Profile', edit_user_registration_path %></li>
           <li id="menu-item-762" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-762">
             <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
           </li>
         </ul>
-        <%= image_tag current_user.avatar.url(:medium), class: "round-image-50", style: 'margin-left: -15px;' %>
+
+        <%= image_tag current_user.avatar.url(:medium), class: "round-image-50 avatar-user-button", style: 'margin-left: -15px;' %>
 
       </li>
       <% else %>
@@ -100,21 +99,22 @@
           </li>
         </ul>
       </li>
-
       <% end %>
-
-
-
-    </ul>   </nav>
+    </ul></nav>
   </div>
 </body>
 </html>
+
 
 <script>
   $('#search-form').keypress(function(e){
     if(e.which == 13){
       $('#button-search').click();
     }
-  })
+  });
+
+  $('.avatar-user-button').click(function(){
+    window.location('user/<%= current_user.id %>');
+  });
 </script>
 

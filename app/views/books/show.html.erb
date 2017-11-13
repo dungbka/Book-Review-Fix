@@ -168,7 +168,7 @@
               <label>Rating</label>
             </div>
             <%= f.text_area :comment, class: 'form-control' ,:required => true %>
-            <%= f.button :submit, class: "button-review" %>
+            <%= f.button :submit, 'Send', class: "button-comment", style: "margin-top: 10px" %>
             <% end %>
           </div>
         </div>
@@ -177,7 +177,7 @@
           <% @my_review = Review.find_by(user_id: current_user.id, book_id: @book.id) %>
           <p style="font-size: 20px; color: red">You are reviewed</p>
           <button class="button-review bt-update-review"><span class="glyphicon glyphicon-pencil"></span> Edit Review</button>
-          <%= link_to '<span class="glyphicon glyphicon-trash"></span> Delete Review'.html_safe, book_review_path(@my_review.book, @my_review), method: :delete, data: {confirm: "Are you sure?"},class: 'button-review', :id => "button-edit"%>
+          <button class="button-review" style="background-color: #d9534f !important;"><%= link_to '<span class="glyphicon glyphicon-trash"></span> Delete Review'.html_safe, book_review_path(@my_review.book, @my_review), method: :delete, data: {confirm: "Are you sure?"}, :id => "button-edit"%></button>
         </div>
          <div class="update-review" style="display: none">
             <%= simple_form_for([@book, @my_review]) do |f| %>
@@ -185,7 +185,7 @@
                 <label>Rating</label>
               </div>
               <%= f.input :comment %>
-              <%= f.button :submit, :class => "btn-custom2" %>
+              <%= f.button :submit, "Update", :class => "button-comment" %>
             <% end %>
           </div>
       <% end %>
