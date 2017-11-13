@@ -1,4 +1,8 @@
-<div class="page-header"><h3><%= @category_name %></h3></div>
+<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-md-10"><h3><%= @category_name %></h3></div>
+</div>
+<div class="page-header" style="margin-top: -10px"></div>
 <% if @books.count == 0 %>
     <h1>There are no books currently in this category</h1>
 <% else %>
@@ -12,7 +16,7 @@
 		end
 	%>
 	<% @books.in_groups_of(2, false).each do |group| %>
-		<%= render "book_list", group: group %>  
+		<%= render "book_list", group: group %>
 	<% end %>
   <%= will_paginate %>
 <% end %>

@@ -80,8 +80,9 @@ body {
 }
 // book_img resize  using in books/index.html.erb
 .book {
-	height: 475px;
+	height: 400px;
   width: 100%;
+  background-size: cover;
 }
 
 // book_img resize  using in books/show.html.erb
@@ -122,7 +123,8 @@ body {
 }
 
 .book-contentinfo {
-	height: 325px;
+  margin-top: 5px;
+	height: 200px;
 	overflow: hidden;
 	margin-bottom: 10px;
 }
