@@ -11,10 +11,12 @@
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10 profile-show-review">
-    <div class="book-image">
+    <div class="row">
+    <div class="book-image col-md-4">
       <%= link_to image_tag(review.book.book_img.url(:book_show), class: "image"), book_path(review.book.id) %>
     </div>
-    <div class="book-review-content">
+
+    <div class="book-review-content col-md-8">
       <div>
         <span class="tip-left" style="padding-left: 20px; margin-top: -10px;"></span>
         <span style="font-weight: 800; font-size: 20px;">Title :</span>
@@ -52,6 +54,9 @@
         <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Review: </span><%= review.comment %></span>
       </div>
     </div>
+    </div>
+
+
   </div>
   <div class="col-md-1"></div>
 </div>
