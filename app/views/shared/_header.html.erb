@@ -66,7 +66,8 @@
         </ul>
       </li>
       <% if user_signed_in? %>
-      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32"><a href="#"><%= get_user_name(current_user.id).truncate(10) %></a>
+      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32">
+        <a href="#"><%= get_user_name(current_user.id).truncate(10) %></a>
         <ul  class="sub-menu">
         <% if current_user.admin? %>
             <% if can? :manage, User %>
@@ -87,6 +88,8 @@
             <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
           </li>
         </ul>
+        <%= image_tag current_user.avatar.url(:medium), class: "round-image-50", style: 'margin-left: -15px;' %>
+
       </li>
       <% else %>
       <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32">
