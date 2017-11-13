@@ -35,7 +35,7 @@
         <div class="name-time">
           <%= link_to name.titleize, reviewer, style: "color: red; margin-right: 5px; margin-left: 10px" %>
           <% for i in (1..5) do %>
-          <% if i<=review.rating %>
+          <% if !review.rating.blank? && i<=review.rating %>
           <i class="fa fa-star" style="color: #faca51"></i>
           <% else %>
           <i class="fa fa-star"></i>
