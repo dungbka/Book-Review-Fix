@@ -23,14 +23,14 @@ class BooksController < ApplicationController
   end
 
   def show
-    @reviews = @book.reviews.paginate(page: params[:page], per_page: 3)
+    @reviews = @book.reviews.order(created_at: :desc).paginate(page: params[:page], per_page: 3)
     if user_signed_in?
       @flag = Review.where(:book_id => @book, :user_id => current_user.id)
     end
     if @book.reviews.blank?
       @average_review = 0
     else
-      @reviews = @book.reviews.paginate(page: params[:page], per_page: 3)
+      @reviews = @book.reviews.order(created_at: :desc).paginate(page: params[:page], per_page: 3)
       @average_review = @book.reviews.average(:rating)
     end
   end
