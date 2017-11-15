@@ -17,6 +17,19 @@ class CommentsController < ApplicationController
       end
     end
   end
+
+  def create_comment
+    comment = Comment.new(params_comment)
+    if comment.save
+      redirect_to root_path
+    else
+      render 'new'
+    end
+  end
+
+  def params_comment
+    params.require(:comment).permit(:commentable_id, :user_id, :body, :commentable_type)
+  end
   private
 
   def comment_params

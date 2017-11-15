@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit]
 
   def index
-    @review = Review.most_recent.paginate(page: params[:page], per_page: 5)
+    @reviews = Review.most_recent.paginate(page: params[:page], per_page: 5)
   end
 
   def new

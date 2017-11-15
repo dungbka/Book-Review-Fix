@@ -1,48 +1,103 @@
-<p id="alert", style="color:red;font-size:36px"><%= alert %></p>
+<% content_for :header do %>
+    <%= render 'shared/header' %>
+<% end %>
 
-<%if params[:search] %>
-    <div class="page-header"><h3>Search Results</h3></div>
-  <% if @books.present? %>
-    <% @books.in_groups_of(2, false).each do |group| %>
-        <%= render "book_list", group: group %>
+<body>
+
+<div class="MAIN-CONTENT">
+
+  <div id="post-13" class="post-13 page type-page status-publish hentry">
+    <div class="fw-page-builder-content">
+      <section class="pos-r is-parallax hidden-xs hidden-sm " id="shortcode-9513f8abdb67cce498fdcedd8ccc692d">
+        <div class="fw-container-full is-matchheight-container">
+          <div class="fw-row" style="margin-top: -150px;">
+            <div id="shortcode-3585e0c945181bb7348d3b70519d8d9e"
+                 class="fw-col-xs-12 fw-col-sm-12 fw-col-md-4 text-left ">
+              <div class="SpecialHeading fw-heading  text-left mt-20 mb-60  is-wow fadeInLeft"
+                   id="shortcode-c6248e4ee380a3d6a0f11545ab65ba16" data-wow-delay="0s"
+                   style="visibility: visible; animation-delay: 0s; animation-name: fadeInLeft;">
+                <h1 class="special-title">Find Your Book</h1>
+                <!--<div class="special-subtitle">Odrin - Book Landing Theme</div>-->
+              </div>
+
+              <!--<div class="TextBlock  is-wow fadeInLeft" id="shortcode-17d4cda93a98fdf651ed476a56cb8ff2"-->
+              <!--data-wow-delay="0s"-->
+              <!--style="visibility: visible; animation-delay: 0s; animation-name: fadeInLeft;">-->
+              <!--<p><em><span class="ng-directive ng-binding">Odrin is a theme specifically created for authors and writes to present and sell their books online. Soufflé tart sweet roll carrot cake icing bear claw dessert oat cake. Lollipop ice cream danish jelly beans cotton candy liquorice cotton candy lemon drops halvah.</span></em>-->
+              <!--</p></div>-->
+
+              <!--<div class="spacer " id="shortcode-3ac401422609949163026c57331f8cf1"></div>-->
+
+              <!--<a href="http://subsolardesigns.com/odrin/demo1/#" target="_blank"-->
+              <!--class="shortcode-button btn btn-normal  is-wow flipInX"-->
+              <!--id="shortcode-e95be8fab860b63c8361cd2e394bd8d1" data-wow-delay="0.2s"-->
+              <!--style="visibility: visible; animation-delay: 0.2s; animation-name: flipInX;">-->
+              <!--<span>Browse Books</span>-->
+              <!--</a>-->
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+  </div><!-- end post -->
+
+</div><!-- end MAIN-CONTENT -->
+<p id="alert" , style="color:red;font-size:36px"><%= alert %></p>
+
+<div style="margin-top: 150px"></div>
+<% if params[:search] %>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-5">
+        <div><h3>Search Results</h3></div>
+      </div>
+    </div>
+    <div class="page-header" style="margin-top: -10px"></div>
+    <% if @books.present? %>
+        <% @books.in_groups_of(2, false).each do |group| %>
+            <%= render "book_list", group: group %>
+        <% end %>
+    <% else %>
+        <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
     <% end %>
-  <% else %>
-    <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
-  <% end %>
 <% else %>
     <% if params[:category].blank? %>
-	    <%= render 'all_books' %>
-	<% else %>
-	    <%= render 'via_category'%>
-    <%end%>
-<%end%>
+        <%= render 'all_books' %>
+    <% else %>
+        <%= render 'via_category' %>
+    <% end %>
+<% end %>
 <%= link_to image_tag('back_to_top.png'), '#', class: 'back-to-top' %>
+</body>
+
 <script>
     $('.average-review-rating').raty({
         readOnly: true,
         path: '/assets/',
-        score: function() {
-            return $(this).attr('data-score')
-        }
+        score: function () {
+            return $(this).attr('data-score');
+        },
     });
 </script>
 
 <script>
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         var offset = 220;
         var duration = 500;
-        jQuery(window).scroll(function() {
+        jQuery(window).scroll(function () {
             if (jQuery(this).scrollTop() > offset) {
                 jQuery('.back-to-top').fadeIn(duration);
             } else {
                 jQuery('.back-to-top').fadeOut(duration);
             }
         });
-
-        jQuery('.back-to-top').click(function(event) {
+        jQuery('.back-to-top').click(function (event) {
             event.preventDefault();
-            jQuery('html, body').animate({scrollTop: 0}, duration);
+            jQuery('html, body').animate({ scrollTop: 0 }, duration);
             return false;
-        })
+        });
     });
 </script>

@@ -1,0 +1,45 @@
+.avatar-profile {
+  margin-top: 5px;
+  margin-left: 20px;
+  border-radius: 50%;
+}
+
+.profile-show-review {
+  margin-top: 10px;
+  border: 2px solid #a6a0a0;
+  height: 350px;
+  margin-left: 28px;
+  .book-image {
+    width: 300px;
+    margin-left: -26px;
+    .image {
+        height: 346px;
+        width: 280px;
+        margin: 0 auto;
+        background-size: cover;
+    }
+  }
+
+  .book-review-content {
+    margin-top: 10px;
+    .book-description {
+      margin-right: -70px;
+
+      height: 80px;
+    }
+
+    .review-info {
+      margin-top: 25px;
+      overflow: hidden;
+      .avatar-user {
+        float: left;
+      }
+      .name-time {
+        float: left;
+      }
+    }
+    .review-comment-content {
+      margin-right: -70px;
+    }
+  }
+}

@@ -1,54 +1,82 @@
-<div class="review-rating" data-score="<%= review.rating  %>"></div>
-  <%= review.comment %> - <%= link_to get_user_name(review.user.id), review.user %>
-<% if can? :update, review %>
-    <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_book_review_path(review.book, review), :class => "btn btn-primary button-edit btn-sm", :id => "button-edit"  %>
-<% end %>
-<% if can? :destroy, review %>
-    <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, book_review_path(review.book, review), method: :delete, data: {confirm: "Are you sure?"}, :class => "btn btn-danger button-edit btn-sm", :id => "button-edit"%>
-<% end %>
-
-	<br>
-<span id="numberoflikes<%= review.id %>">
-	<%= render "reviews/stats", review: review %>
-</span>
-<span id="show-comment-<%=review.id%>" onclick="show_comment(this.id)">
-  <%= review.root_comments.count %><i class="fa fa-comments-o" aria-hidden="true"></i>
-</span>
-<% if user_signed_in? %>
-  <div>
-    <section id="like<%= review.id %>">
-      <% if current_user.liked? review  %>
-        <% like = Vote.find_by votable_type: "Review", votable_id: review.id, voter_id: current_user.id %>
-        <%= render "reviews/unlike", like: like %>
+<!-- name co the bi nil khi do dung get_user_name de tra ve email neu nil -->
+<div class="border-review"></div>
+<div class="review-container">
+  <div class="rate-name-user">
+    <% for i in (1..5) do %>
+      <% if i<=review.rating %>
+        <i class="fa fa-star" style="color: #faca51"></i>
       <% else %>
-        <%= render "reviews/like", review: review %>
+        <i class="fa fa-star"></i>
       <% end %>
-    </section>
-  </div>
-    <div id="display-comment-<%=review.id%>" class="display-comment">
-    <% review.root_comments.each do |comment| %>
-        <% if User.find_by(id: comment.user_id).name == nil %>
-            <p><%= comment.body%> -  <%= link_to User.find_by(id: comment.user_id).email, user_path(User.find_by(id: comment.user_id).id) %><br></p>
-        <% else %>
-            <p><%= comment.body%> -  <%= link_to User.find_by(id: comment.user_id).name, user_path(User.find_by(id: comment.user_id).id) %><br></p>
-        <% end %>
     <% end %>
-      <%= link_to "Comment", book_review_path(@book, review), :class => "btn btn-primary button-edit btn-sm", :id => "button-edit" %>
+    <span style="margin-left: 10px;"><%= link_to get_user_name(review.user.id).titleize, review.user, style: "color: red;" %></span>
+    <span><time><%= review.created_at.strftime("%Y年%m月%d日") %></time></span>
+  </div>
+
+  <div class="show-review-content">
+    <%= review.comment %>
+  </div>
+  <div class="bt-like-comment">
+
+      <% if user_signed_in? %>
+        <div>
+          <section id="like<%= review.id %>">
+            <% if current_user.liked? review  %>
+              <% like = Vote.find_by votable_type: "Review", votable_id: review.id, voter_id: current_user.id %>
+              <%= render "reviews/unlike", like: like %>
+            <% else %>
+              <%= render "reviews/like", review: review %>
+            <% end %>
+          </section>
+        </div>
+      <% end %>
+      <span id="numberoflikes<%= review.id %>">
+      <% if user_signed_in? %>
+        <%= render "reviews/stats", review: review %>
+      <% else %>
+        <i class="fa fa-thumbs-o-up bt-like" aria-hidden="true" style="margin-left: 10px; font-size: 20px; width: 80px;">
+        <span><%= review.get_likes.size %> Like</span>
+          </i>
+        <i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"> Comment</i>
+      <% end %>
+
+      </span>
+  </div>
+  <div class="show-new-comment-<%= review.id %>" style="display: none">
+    <div class="show-new-comment">
+      <div class="show-comment">
+          <% review.root_comments.each do |comment| %>
+            <% if User.find_by(id: comment.user_id).name == nil %>
+              <p ><%= link_to User.find_by(id: comment.user_id).email.titleize, user_path(User.find_by(id: comment.user_id).id), style: "color: red" %>
+                <time><%= comment.created_at.strftime("%Y年%m月%d日") %></time>
+              </p>
+              <p style="margin-left: 10px"><%= comment.body%></p>
+            <% else %>
+              <p><%= link_to User.find_by(id: comment.user_id).name.titleize, user_path(User.find_by(id: comment.user_id).id), style: "color: red" %>
+                <time><%= comment.created_at.strftime("%Y年%m月%d日") %></time>
+              </p>
+              <p style="margin-left: 10px"><%= comment.body%></p>
+            <% end %>
+            <div style="border-bottom: solid 1px #ccc; margin-bottom: 20px; padding-bottom: -15px"></div>
+      <% end %>
+      </div>
+      <% if user_signed_in? %>
+        <div class="new-comment">
+          <%= form_for(Comment.new, url: create_comment_path, method: 'post') do |f| %>
+            <%= f.hidden_field :commentable_id, value: review.id %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.hidden_field :commentable_type, value: "Review" %>
+            <%= f.text_area :body, class: 'form-control' %>
+            <%= f.submit "send", class: 'button-send-comment', style: "margin-top: 10px;"%>
+          <% end %>
+        </div>
+      <% end %>
     </div>
+  </div>
 
-<%end %>
-<br><br>
+</div>
 
-<script>
-    var show_comment = function()
-    {
-        if (document.getElementById('display-comment-<%=review.id%>').style.display !== 'none') {
-            (document.getElementById('display-comment-<%=review.id%>')).style.display = 'none';
-        }
-        else {
-            (document.getElementById('display-comment-<%=review.id%>')).style.display = 'block';
-        }
 
-    }
-    document.getElementById('show-comment-<%=review.id%>').onclick = show_comment;
-</script>
+
+
+
