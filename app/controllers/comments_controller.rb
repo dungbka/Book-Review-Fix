@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
   def create_comment
     comment = Comment.new(params_comment)
     if comment.save
-      redirect_to root_path
+      redirect_to book_path(params[:comment][:book_id])
     else
       render 'new'
     end

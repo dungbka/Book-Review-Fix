@@ -65,7 +65,8 @@
     <% end %>
 <% else %>
     <% if params[:category].blank? %>
-        <%= render 'all_books' %>
+      <%= render 'random' %>
+      <%= render 'all_books' %>
     <% else %>
         <%= render 'via_category' %>
     <% end %>
