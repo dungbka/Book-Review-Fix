@@ -9,6 +9,7 @@ class BooksController < ApplicationController
       @books=Book.search(params[:search]).order("created_at DESC")
     else
       if params[:category].blank?
+        @random_book = Book.order('RANDOM()').first(5)
         @categories = Category.all.paginate(page: params[:page], per_page: 5).order("created_at DESC")
       else
         @category_id = Category.find_by(name: params[:category])
