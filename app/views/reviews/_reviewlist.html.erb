@@ -9,12 +9,12 @@
           <div class="book-review-content col-md-8">
             <div>
               <span class="tip-left" style="padding-left: 20px; margin-top: -10px;"></span>
-              <span style="font-weight: 800; font-size: 20px;">Title :</span>
+              <span style="font-weight: 800; font-size: 20px;"><%= t "Title" %> :</span>
               <span style="font-weight: 500; font-size: 20px; color: #db5b09; "><%= review.book.title.truncate_words(10) %></span>
             </div>
             <div class='book-description'>
 
-              <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Description :</span><%= review.book.description.truncate(200) %></span>
+              <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;"><%= t "Descriptions" %> :</span><%= review.book.description.truncate(200) %></span>
             </div>
 
             <div class="review-info">
@@ -35,14 +35,14 @@
                 <% end %>
                 <% end %>
                 <br>
-                <div style="margin-top: -5px"><span style="margin-left: 10px; color: #999999;"><%= time_ago_in_words from_time %> ago.</span></div>
+                <div style="margin-top: -5px"><span style="margin-left: 10px; color: #999999;"><%= time_ago_in_words from_time %><%= t "ago" %>.</span></div>
 
               </div>
 
 
             </div>
             <div class="review-comment-content">
-              <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;">Review: </span><%= review.comment.truncate(420) %></span>
+              <span class="tip-left" style=" padding-left: 20px;"><span style="font-weight: 800; font-size: 16px;"><%= t "Review" %>: </span><%= review.comment.truncate(420) %></span>
             </div>
           </div>
         </div>

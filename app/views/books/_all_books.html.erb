@@ -17,7 +17,7 @@
 	</div>
 	<div class="page-header" style="margin-top: -10px"></div>
 	<% if books.count == 0 %>
-	    <h1>There are no books currently in this category</h1>
+	    <h1><%= t "There are no books currently in this category" %></h1>
 	<% else %>
 		<% books.take(4).in_groups_of(2, false).each do |group| %>
 			<%= render "book_list", group: group %>

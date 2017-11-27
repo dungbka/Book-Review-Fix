@@ -1,7 +1,7 @@
 <%= form_for Vote.new, remote: true do |f| %>
 <div><%= hidden_field_tag :votable_id, user_id %></div>
 <div><%= hidden_field_tag :votable_type, "User" %></div>
-<%= f.submit "Follow", class: "button-follow" %>
+<%= f.submit t("Follow"), class: "button-follow" %>
 <% end %>
 <script type='text/javascript'>
 

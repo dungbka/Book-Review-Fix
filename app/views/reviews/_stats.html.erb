@@ -11,7 +11,7 @@
 <i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"></i>
 <% end %>
 <div class="show-list-of-likes-<%= review.id %>" style="display: none" >
-  <%if review.get_likes.size != 0 %>Liked by: <br><% end %>
+  <%if review.get_likes.size != 0 %><%= t "Liked by" %>: <br><% end %>
   <% Vote.where("votable_id=?", review.id).take(3).each do |like| %>
     <% user = User.find_by(id: like.voter_id) %>
     <% display_name = user.name || user. email %>

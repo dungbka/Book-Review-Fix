@@ -1,6 +1,6 @@
 <%= simple_form_for([@book, @book.reviews.build]) do |f| %>
     <div id="rating-form">
-      <label>Rating</label>
+      <label><%= t "Rating" %></label>
     </div>
     <%= f.text_area :comment, class: 'form-control' ,:required => true %>
     <%= f.button :submit, :class => "btn-custom2" %>
