@@ -1,0 +1,109 @@
+ja:
+  latest_review: "最新レビュー"
+  about: "アバウト"
+  Home: "ホーム"
+  categories: "カテゴリ"
+  sign_in: "サインイン"
+  find_your_book: "あなたの本を探す"
+  search_results: "検索結果"
+  There are no posts containing the term(s): "入力した言葉を含む投稿はありません"
+  New Book: "新書"
+  Your friend: ""
+  reviewed this: "さんはこれをレビューしました"
+  ago: "前"
+  Random book: "ランダムブック"
+  There are no books currently in this category: "このカテゴリのブックがまだありません"
+  Show Book: "ブックを表示する"
+  Rate Average: "平均レート"
+  Total Rate: "全てのレート"
+  Add Your Review: "レビューを追加する"
+  You have reviewed this: "あなたはこれをレビューしました"
+  Rating: "評価"
+  You must login to review: "レビューにログインする必要があります"
+  Reviews: "レビュース"
+  Comment: "コメント"
+  Like: "いいね"
+  Liked by: "ライクしました人"
+  Edit Review: "レビューを編集する"
+  New Review: "新レビュー"
+  Book Reviews: "書評"
+  Resend confirmation instructions: "確認の指示を再送信"
+  Welcome: "ようこそ"
+  You can confirm your account email through the link below: "下のリンクを利用してアカウントのメールを確認できます"
+  Confirm my account: "アカウントを確認する"
+  You reviewed this: "あなたはこれをレビューしました"
+  Review List: "レビュー一覧"
+  All users: "すべてのユーザー"
+  Followed users: "フォローしているユーザー"
+  Title: "タイトル"
+  Descriptions: "説明"
+  Review: "レビュー"
+  Manage user: "ユーザーの管理"
+  Add Book: "ブックの追加"
+  Add Category: "カテゴリの追加"
+  Profile: "プロフィール"
+  Logout: "ログアウト"
+  Follow: "フォロー"
+  Unfollow: "アンフォロー"
+  Users: "ユーザー"
+  Email: "メール"
+  Name: "名前"
+  Function: "機能"
+  Show: "表示"
+  Destroy: "削除"
+  Following: "フォローしているユーザー"
+  Followers: "フォロワー"
+  No following to show: "フォローしているユーザーなし"
+  No followers to show: "フォロワーなし"
+  Admin: "管理者"
+  Regular: "通常"
+  Edit Profile: "プロファイル編集"
+  En: "英"
+  Ja: "日"
+
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 約1時間
+        other: 約%{count}時間
+      about_x_months:
+        one: 約1ヶ月
+        other: 約%{count}ヶ月
+      about_x_years:
+        one: 約1年
+        other: 約%{count}年
+      almost_x_years:
+        one: 1年弱
+        other: "%{count}年弱"
+      half_a_minute: 30秒前後
+      less_than_x_minutes:
+        one: 1分以内
+        other: "%{count}分未満"
+      less_than_x_seconds:
+        one: 1秒以内
+        other: "%{count}秒未満"
+      over_x_years:
+        one: 1年以上
+        other: "%{count}年以上"
+      x_days:
+        one: 1日
+        other: "%{count}日"
+      x_minutes:
+        one: 1分
+        other: "%{count}分"
+      x_months:
+        one: 1ヶ月
+        other: "%{count}ヶ月"
+      x_years:
+        one: 1年
+        other: "%{count}年"
+      x_seconds:
+        one: 1秒
+        other: "%{count}秒"
+    prompts:
+      day: 日
+      hour: 時
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年

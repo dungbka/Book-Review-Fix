@@ -1,7 +1,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
-  <title>Show Book</title>
+  <title><%= t "Show Book" %></title>
 
   <link rel='stylesheet' id='woocommerce-general-css'  href='http://subsolardesigns.com/odrin/demo1/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=3.2.3' type='text/css' media='all' />
   <link rel='stylesheet' id='odrin_fonts-css'  href='https://fonts.googleapis.com/css?family=Muli:200,200italic,300,300italic,regular,italic,600,600italic,700,700italic,800,800italic,900,900italic%7CCinzel+Decorative:regular,700,900%7CGentium+Basic:regular,italic,700,700italic' type='text/css' media='all' />
@@ -81,9 +81,9 @@
   <div class="rate-container">
     <div id="rate-show-hotel">
       <div id="rate-avg-hotel">
-        <p style="text-align: center; font-size: 15pt;">Rate Average:</p>
+        <p style="text-align: center; font-size: 15pt;"><%= t "Rate Average" %> :</p>
         <p id="rate-sum"><%= @average_review.round(1) %>/5 </p>
-        <p id="rate-count"><i class="fa fa-user"></i> Total Rate: <%= @book.total_rate %></p>
+        <p id="rate-count"><i class="fa fa-user"></i> <%= t "Total Rate" %> : <%= @book.total_rate %></p>
       </div>
       <div id="rate-detail-hotel">
         <span> 5 </span>
@@ -159,12 +159,12 @@
       <% if @flag.empty? %>
         <div class="add-review">
           <div id="bt-add-review">
-            <button class="button-review">Add Your Review</button>
+            <button class="button-review"><%= t "Add Your Review" %></button>
           </div>
           <div class="content-add-review", style="display: none">
             <%= simple_form_for([@book, @book.reviews.build]) do |f| %>
             <div id="rating-form">
-              <label>Rating</label>
+              <label><%= t "Rating" %></label>
             </div>
             <%= f.text_area :comment, class: 'form-control' ,:required => true %>
             <%= f.button :submit, 'Send', class: "button-comment", style: "margin-top: 10px" %>
@@ -174,14 +174,14 @@
       <% else %>
         <div>
           <% @my_review = Review.find_by(user_id: current_user.id, book_id: @book.id) %>
-          <p style="font-size: 20px; color: red">You are reviewed</p>
+          <p style="font-size: 20px; color: red"><%= t "You have reviewed this" %></p>
           <button class="button-review bt-update-review"><span class="glyphicon glyphicon-pencil"></span> Edit Review</button>
           <button class="button-review" style="background-color: #d9534f !important;"><%= link_to '<span class="glyphicon glyphicon-trash"></span> Delete Review'.html_safe, book_review_path(@my_review.book, @my_review), method: :delete, data: {confirm: "Are you sure?"}, :id => "button-edit"%></button>
         </div>
          <div class="update-review" style="display: none">
             <%= simple_form_for([@book, @my_review]) do |f| %>
               <div id="rating-form">
-                <label>Rating</label>
+                <label><%= t "Rating" %></label>
               </div>
               <%= f.input :comment %>
               <%= f.button :submit, "Update", :class => "button-comment" %>
@@ -189,11 +189,11 @@
           </div>
       <% end %>
     <% else %>
-    <p style="font-size: 20px; color: red">You must login to review</p>
+    <p style="font-size: 20px; color: red"><%= t "You must login to review" %></p>
     <% end %>
 
     <div class="show-review">
-      <p style="font-size: 20px; margin-top: 30px;">Reviews</p>
+      <p style="font-size: 20px; margin-top: 30px;"><%= t "Reviews" %></p>
       <%= render @reviews %>
       <%= will_paginate @reviews %>
     </div>

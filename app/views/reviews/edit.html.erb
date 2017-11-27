@@ -2,11 +2,11 @@
 
   <div class="edit-review-form">
 
-    <h1>Edit Review</h1>
+    <h1><%= t "Edit Review" %></h1>
 
     <%= simple_form_for([@book, @review]) do |f| %>
         <div id="rating-form">
-          <label>Rating</label>
+          <label><%= t "Rating" %></label>
         </div>
         <%= f.input :comment %>
         <%= f.button :submit, :class => "btn-custom2" %>

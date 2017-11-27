@@ -32,13 +32,13 @@
 									if current_user.id == reviewer_id
 										from_time = review.created_at %>
 										<blockquote class="remove"> <%= review.comment.truncate_words(5) %>
-											<cite>You reviewed this <%= time_ago_in_words from_time %> ago.</cite>
+											<cite><%= t "You reviewed this" %> <%= time_ago_in_words from_time %><%= t "ago" %>.</cite>
 										</blockquote>
 										<% else
 										name = reviewer.name ? reviewer.name : reviewer.email
 										from_time = review.created_at %>
 										<blockquote class="remove"><%= review.comment.truncate_words(5) %>
-											<cite>Your friend <%= link_to name, reviewer %> reviewed this <%= time_ago_in_words from_time %> ago.</cite>
+											<cite><%= t "Your friend" %> <%= link_to name, reviewer %> <%= t "reviewed this" %> <%= time_ago_in_words from_time %> <%= t "ago" %>.</cite>
 										</blockquote>
 										<% end %>
 										<% end %>

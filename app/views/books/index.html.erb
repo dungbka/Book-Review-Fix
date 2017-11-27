@@ -16,7 +16,7 @@
               <div class="SpecialHeading fw-heading  text-left mt-20 mb-60  is-wow fadeInLeft"
                    id="shortcode-c6248e4ee380a3d6a0f11545ab65ba16" data-wow-delay="0s"
                    style="visibility: visible; animation-delay: 0s; animation-name: fadeInLeft;">
-                <h1 class="special-title">Find Your Book</h1>
+                <h1 class="special-title"><%= t "find_your_book" %></h1>
                 <!--<div class="special-subtitle">Odrin - Book Landing Theme</div>-->
               </div>
 
@@ -52,7 +52,7 @@
     <div class="row">
       <div class="col-md-1"></div>
       <div class="col-md-5">
-        <div><h3>Search Results</h3></div>
+        <div><h3><%= t "search_results" %></h3></div>
       </div>
     </div>
     <div class="page-header" style="margin-top: -10px"></div>
@@ -61,7 +61,7 @@
             <%= render "book_list", group: group %>
         <% end %>
     <% else %>
-        <p>There are no posts containing the term(s) <%= params[:search] %>.</p>
+        <p><%= t "There are no posts containing the term(s)" %> <%= params[:search] %>.</p>
     <% end %>
 <% else %>
     <% if params[:category].blank? %>

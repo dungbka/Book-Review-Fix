@@ -13,5 +13,9 @@ Rails.application.routes.draw do
   resources :reviews
   resources :votes, only: [:create, :destroy]
 
+  scope "(:locale)", locale: /en|ja/ do
+    root to: 'books#index'
+  end
+
   root 'books#index'
 end
