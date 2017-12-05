@@ -22,6 +22,12 @@ class ReviewsController < ApplicationController
     @review.book_id = @book.id
     @review.user_id = current_user.id
     if @review.save
+      @followers = @current_user.votes_for.up.by_type("User").voters
+      if @followers.any?
+        @followers.each do |subscriber|
+          Notification.create(subscriber_id: subscriber.id, notifi_id: current_user.id, message: 'review', book_id: @review.book.id)
+        end
+      end
       redirect_to book_path(@book)
     else
       render 'new'

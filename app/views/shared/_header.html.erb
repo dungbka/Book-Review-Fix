@@ -44,13 +44,21 @@
       <li id="menu-item-689" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-689">
         <%= link_to t("latest_review"), reviews_path %>
       </li>
+      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32">
+        <%= link_to t("En"), locale:"en" %>
+        <ul class="sub-menu">
+          <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
+            <%= link_to t("Ja"), locale:"ja" %>
+          </li>
+        </ul>
+      </li>
     </ul></nav>
     <div class="navigation-logo is-slicknav-logo">
 <!--       <a href="http://subsolardesigns.com/odrin/demo1/">
         <h1>Bo</h1><h1>ok Reviews</h1>
       </a> -->
         <form class="navbar-form" role="search">
-            <input style="margin-top: -5px; width: 419px; border: 1px solid #ccc" type="text" class="form-control form-search" placeholder="Search" name="search" id="search-form">
+            <input style="margin-top: -5px; width: 300px; border: 1px solid #ccc" type="text" class="form-control form-search" placeholder="Search" name="search" id="search-form">
             <button style="display: none" id="button-search" type="submit"></button>
         </form>
     </div>
@@ -95,17 +103,46 @@
         <%= link_to t("sign_in"), new_user_session_path %>
         <ul class="sub-menu">
           <li id="menu-item-706" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-706">
-            <%= link_to "Sign Up", new_user_registration_path %>
+            <%= link_to t("sign_up"), new_user_registration_path %>
           </li>
         </ul>
       </li>
       <% end %>
-      
+      <% if user_signed_in? %>
+      <% @notification_stt_false = Notification.where(subscriber_id: current_user.id, status: false).order(created_at: :desc) %>
+      <li id="menu-item-32" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-32">
+        <% if @notification_stt_false.count > 0 %>
+        <i class="fa fa-bell-o bell" style="font-size: 30px; margin-top: 30px; color: red"><%= @notification_stt_false.count %></i>
+        <% else %>
+        <i class="fa fa-bell-o bell" style="font-size: 30px; margin-top: 30px;"><%= @notification_stt_false.count %></i>
+        <% end %>
+      </li>
+      <% end %>
+
     </ul></nav>
-    <%= link_to t("En"), locale:"en" %>
-    <%= link_to t("Ja"), locale:"ja" %>
   </div>
 </body>
+<% if user_signed_in? %>
+<div class="notifi-body">
+  <div class="notifi-container">
+    <% if(@notification_stt_false.count > 6) %>
+      <%= render @notification_stt_false %>
+    <% else %>
+      <% @notification_stt_true = Notification.where(subscriber_id: current_user.id, status: true).order(created_at: :desc).limit(6-@notification_stt_false.count) %>
+      <%= render @notification_stt_false %>
+
+      <%= render @notification_stt_true %>
+    <% end %>
+  </div>
+</div>
+
+<div style="display: none">
+<%= form_for :notification, url: update_status_path, method: :post do |f|%>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.submit 'abc',class: "bt-submit-notifi" %>
+<% end %>
+</div>
+<% end %>
 </html>
 
 
@@ -117,3 +154,10 @@
   });
 </script>
 
+<script>
+  $('.bell').click(function(){
+    $('.notifi-container').toggle();
+    $('.bell').css('color','black');
+    $('.bt-submit-notifi').click();
+  })
+</script>

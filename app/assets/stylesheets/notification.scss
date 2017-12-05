@@ -1,0 +1,41 @@
+.notifi-body{
+  position: relative;
+
+  .notifi-container{
+    position: absolute;
+    display: none;
+    right: 0;
+    top: 100px;
+    border: solid 1px #ccc;
+    width: 350px;
+    min-height: 400px;
+    z-index: 999;
+    background-color: #fff;
+
+    .notification-item {
+      height: 80px;
+      border-bottom: 1px solid #ccc;
+      overflow: hidden;
+      .avatar-user{
+        width: 80px;
+        padding: 10px;
+        background-size: cover;
+        float: left;
+      }
+
+      .notification-info {
+        .name {
+          margin-top: 10px;
+          font-size: 20px;
+        }
+
+        .message {
+          .message-detail{
+            color: black!important;
+            font-size: 18px!important;
+          }
+        }
+      }
+    }
+  }
+}

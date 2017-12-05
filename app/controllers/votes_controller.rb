@@ -12,9 +12,12 @@ class VotesController < ApplicationController
 
 		if @type.eql? "Review"
 			@object = Book.find_by id: @votable.book_id
+			review = Review.find_by(id: params[:votable_id])
+			Notification.create(subscriber_id: review.user.id, notifi_id: current_user.id, message: 'like', book_id: review.book.id)
 		else
 			@object = @votable
 		end
+
 		respond_to do |format|
       format.html {redirect_to @object}
       format.js

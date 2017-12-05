@@ -21,9 +21,9 @@ class CommentsController < ApplicationController
   def create_comment
     comment = Comment.new(params_comment)
     if comment.save
+      review = Review.find_by(id: params[:comment][:commentable_id])
+      Notification.create(subscriber_id: review.user.id, notifi_id: params[:comment][:user_id], message: 'comment', book_id: params[:comment][:book_id])
       redirect_to book_path(params[:comment][:book_id])
-    else
-      render 'new'
     end
   end
 

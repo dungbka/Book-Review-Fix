@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   end
 
   root 'books#index'
+
+  post 'update_status', to: 'notifications#update_status', as: 'update_status'
 end

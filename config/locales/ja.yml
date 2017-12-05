@@ -4,6 +4,7 @@ ja:
   Home: "ホーム"
   categories: "カテゴリ"
   sign_in: "サインイン"
+  sign_up: "サインアップ"
   find_your_book: "あなたの本を探す"
   search_results: "検索結果"
   There are no posts containing the term(s): "入力した言葉を含む投稿はありません"
@@ -60,6 +61,9 @@ ja:
   Edit Profile: "プロファイル編集"
   En: "英"
   Ja: "日"
+  new_review: "は新しいレビューを投稿します"
+  like_review: "はあなたのレビューをいいね"
+  comment_review: "はあなたのレビューにコメントします"
 
   datetime:
     distance_in_words:
