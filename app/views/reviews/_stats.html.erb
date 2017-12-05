@@ -1,15 +1,23 @@
 <% if current_user.liked? review %>
 <% like = Vote.find_by votable_type: "Review", votable_id: review.id, voter_id: current_user.id %>
 <i class="fa fa-thumbs-up bt-like bt-unlike-<%= like.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px; width: 80px;">
-  <span><%= review.get_likes.size %> Like</span>
+  <span><%= review.get_likes.size %></span>
 </i>
-<i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"> Comment</i>
+<i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"></i>
 <% else %>
 <i class="fa fa-thumbs-o-up bt-like bt-like-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px; width: 80px;">
-  <span><%= review.get_likes.size %> Like</span>
+  <span><%= review.get_likes.size %></span>
 </i>
-<i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"> Comment</i>
+<i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"></i>
 <% end %>
+<div class="show-list-of-likes-<%= review.id %>" style="display: none" >
+  <%if review.get_likes.size != 0 %><%= t "Liked by" %>: <br><% end %>
+  <% Vote.where("votable_id=?", review.id).take(3).each do |like| %>
+    <% user = User.find_by(id: like.voter_id) %>
+    <% display_name = user.name || user. email %>
+    <%= display_name %><br>
+  <% end %>
+</div>
 
 <script>
 <% if current_user.liked? review %>
@@ -17,10 +25,22 @@
   $('.bt-unlike-<%= like.id %>').click(function(){
     $('.btn-submit-unlike-<%= like.id %>').click();
   });
+  $('.bt-unlike-<%= like.id %>').hover(function(){
+    $('.show-list-of-likes-<%= review.id %>').show();
+  }, function(){
+    $('.show-list-of-likes-<%= review.id %>').hide();
+  });
 <% end %>
   $('.bt-like-<%= review.id %>').click(function(){
     $('.btn-submit-like-<%= review.id %>').click();
   });
+
+  $('.bt-like-<%= review.id %>').hover(function(){
+    $('.show-list-of-likes-<%= review.id %>').show();
+  }, function(){
+    $('.show-list-of-likes-<%= review.id %>').hide();
+  });
+
 </script>
 
 <script>

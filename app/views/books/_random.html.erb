@@ -1,0 +1,18 @@
+<div class="random-book">
+  <div class="row" style="margin-top: 50px">
+    <div class="col-md-1"></div>
+      <div class="col-md-5"><h3><%= t "Random book" %></h3></div>
+  </div>
+  <div class="page-header" style="margin-top: -10px"></div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <% @random_book.each do |rb| %>
+        <div class="col-md-2">
+          <%= link_to image_tag(rb.book_img.url(:book_index), class: "random_book"), book_path(rb.id) %>
+          <div class="random-title">
+            <%= rb.title %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

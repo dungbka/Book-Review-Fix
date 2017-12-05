@@ -1,0 +1,19 @@
+<div class="notification-item">
+  <div class="avatar-user"><%= image_tag current_user.avatar.url(:medium), class: 'avatar' %></div>
+  <div class="notification-info">
+  <% notifi_user = User.find_by(id: notification.notifi_id) %>
+  <% book = Book.find_by(id: notification.book_id) %>
+    <div class="name">
+      <%= link_to get_user_name(notifi_user.id), notifi_user %>
+    </div>
+    <div class="message">
+      <% if notification.message == 'comment' %>
+        <%= link_to t("comment_review"), book_path(id: notification.book_id), class: 'message-detail' %>
+      <% elsif notification.message == 'like' %>
+        <%= link_to t("like_review"), book_path(id: notification.book_id), class: 'message-detail' %>
+      <% elsif notification.message == 'review' %>
+        <%= link_to t("new_review"), book_path(id: notification.book_id), class: 'message-detail' %>
+      <% end %>
+    </div>
+  </div>
+</div>

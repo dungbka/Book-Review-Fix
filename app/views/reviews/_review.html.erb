@@ -10,7 +10,7 @@
       <% end %>
     <% end %>
     <span style="margin-left: 10px;"><%= link_to get_user_name(review.user.id).titleize, review.user, style: "color: red;" %></span>
-    <span><time><%= review.created_at.strftime("%Y年%m月%d日") %></time></span>
+    <span><time><%= review.created_at.strftime("%d/%m") %></time></span>
   </div>
 
   <div class="show-review-content">
@@ -35,9 +35,9 @@
         <%= render "reviews/stats", review: review %>
       <% else %>
         <i class="fa fa-thumbs-o-up bt-like" aria-hidden="true" style="margin-left: 10px; font-size: 20px; width: 80px;">
-        <span><%= review.get_likes.size %> Like</span>
+        <span><%= review.get_likes.size %><%= t "Like" %></span>
           </i>
-        <i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"> Comment</i>
+        <i class="fa fa-comments-o bt-comment bt-comment-<%= review.id %>" aria-hidden="true" style="margin-left: 10px; font-size: 20px"><%= t "Comment" %></i>
       <% end %>
 
       </span>
@@ -48,12 +48,12 @@
           <% review.root_comments.each do |comment| %>
             <% if User.find_by(id: comment.user_id).name == nil %>
               <p ><%= link_to User.find_by(id: comment.user_id).email.titleize, user_path(User.find_by(id: comment.user_id).id), style: "color: red" %>
-                <time><%= comment.created_at.strftime("%Y年%m月%d日") %></time>
+                <time><%= comment.created_at.strftime("%d/%m") %></time>
               </p>
               <p style="margin-left: 10px"><%= comment.body%></p>
-            <% else %>
+            <% else %> 
               <p><%= link_to User.find_by(id: comment.user_id).name.titleize, user_path(User.find_by(id: comment.user_id).id), style: "color: red" %>
-                <time><%= comment.created_at.strftime("%Y年%m月%d日") %></time>
+                <time><%= comment.created_at.strftime("%d/%m") %></time>
               </p>
               <p style="margin-left: 10px"><%= comment.body%></p>
             <% end %>
@@ -66,6 +66,7 @@
             <%= f.hidden_field :commentable_id, value: review.id %>
             <%= f.hidden_field :user_id, value: current_user.id %>
             <%= f.hidden_field :commentable_type, value: "Review" %>
+            <%= f.hidden_field :book_id, value: @book.id %>
             <%= f.text_area :body, class: 'form-control' %>
             <%= f.submit "send", class: 'button-send-comment', style: "margin-top: 10px;"%>
           <% end %>
